@@ -1,15 +1,22 @@
-unsigned long long binomialCoeff(int n, int k) {
-    if (k < 0 || k > n) return 0;
-    if (k == 0 || k == n) return 1;
-    // Use the property C(n, k) = C(n, n-k) to reduce iterations
-    if (k > n / 2) k = n - k;
+const int MOD = 1e9 + 7;
 
-    // Use double for intermediate calculations to prevent overflow
-    double res = 1;
-    for (int i = 1; i <= k; ++i) {
-        res = res * (n - i + 1) / i;
+long long power(long long base, long long exp, long long mod) {
+    long long res = 1;
+    base %= mod;
+    while (exp > 0) {
+        if (exp & 1) res = res * base % mod;
+        base = base * base % mod;
+        exp >>= 1;
     }
+    return res;
+}
 
-    // Cast the result to unsigned long long (or appropriate integer type)
-    return (unsigned long long)(res + 0.01); // Add a small epsilon for rounding
+long long C(int n, int k) {
+    if (k > n) return 0;
+    long long num = 1, den = 1;
+    for (int i = 0; i < k; ++i) {
+        num = num * ((n - i) % MOD) % MOD;
+        den = den * ((i + 1) % MOD) % MOD;
+    }
+    return num % MOD * power(den, MOD - 2, MOD) % MOD;
 }
