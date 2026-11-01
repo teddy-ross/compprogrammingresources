@@ -1,8 +1,3 @@
-#include <array>
-#include <string>
-#include <vector>
-using namespace std;
-
 // Array backed trie
 class Trie {
     // One row per node. The initializer {{}} creates a single zero-filled
